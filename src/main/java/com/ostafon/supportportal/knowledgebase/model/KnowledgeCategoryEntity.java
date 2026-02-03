@@ -1,4 +1,4 @@
-package com.ostafon.supportportal.knowledge.model;
+package com.ostafon.supportportal.knowledgebase.model;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.ostafon.supportportal.knowledge.model;
+package com.ostafon.supportportal.knowledgebase.model;
 
 import com.ostafon.supportportal.users.model.UserEntity;
 import jakarta.persistence.*;
