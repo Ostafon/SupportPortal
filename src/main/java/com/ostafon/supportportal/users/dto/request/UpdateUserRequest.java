@@ -16,9 +16,14 @@ public class UpdateUserRequest {
     @JsonProperty("email")
     private String email;
 
-    @NotBlank(message = "Full name is required")
-    @JsonProperty("fullName")
-    private String fullName;
+    @NotBlank(message = "First name is required")
+    @JsonProperty("firstName")
+    private String firstName;
+
+    @NotBlank(message = "Last name is required")
+    @JsonProperty("lastName")
+    private String lastName;
+
 
     @JsonProperty("role")
     private UserRole role;

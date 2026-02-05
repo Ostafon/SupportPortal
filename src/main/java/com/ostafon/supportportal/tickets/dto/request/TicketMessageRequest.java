@@ -16,5 +16,5 @@ public class TicketMessageRequest {
     private String message;
 
     @JsonProperty("authorId")
-    private Long authorId;  // ID пользователя или инженера, который оставил сообщение
+    private Long authorId;
 }

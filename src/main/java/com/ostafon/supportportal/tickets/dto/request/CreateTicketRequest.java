@@ -25,11 +25,11 @@ public class CreateTicketRequest {
     private TicketStatus status = TicketStatus.NEW;
 
     @JsonProperty("assigneeId")
-    private Long assigneeId;  // ID инженера, которому будет назначен тикет (если есть)
+    private Long assigneeId;
 
     @JsonProperty("groupId")
-    private Long groupId;  // ID группы инженеров (если необходимо)
+    private Long groupId;
 
     @JsonProperty("dueAt")
-    private LocalDateTime dueAt;  // Срок выполнения
+    private LocalDateTime dueAt;
 }

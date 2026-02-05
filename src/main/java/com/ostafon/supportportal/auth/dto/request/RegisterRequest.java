@@ -17,8 +17,19 @@ public class RegisterRequest {
     @JsonProperty("email")
     private String email;
 
+    @NotBlank(message = "First name required")
+    @Size(min = 3, max = 50)
+    @JsonProperty("firstName")
+    private String firstName;
+
+    @NotBlank(message = "Last name required")
+    @Size(min = 3, max = 50)
+    @JsonProperty("lastName")
+    private String lastName;
+
+
     @NotBlank(message = "Password is required")
-    @Size(min = 6, max = 255, message = "Password must be between 6 and 255 characters")
+    @Size(min = 4, max = 255, message = "Password must be between 6 and 255 characters")
     @JsonProperty("password")
     private String password;
 

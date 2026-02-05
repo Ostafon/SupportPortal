@@ -2,7 +2,9 @@ create table users (
                        id bigserial primary key,
                        email varchar(255) not null unique,
                        password_hash varchar(255) not null,
-                       full_name varchar(255) not null,
+                       first_name varchar(255) not null,
+                       last_name varchar(255) not null,
+                       username varchar(255),
                        role varchar(50) not null,
                        created_at timestamp not null default now()
 );
