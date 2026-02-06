@@ -1,7 +1,5 @@
 package com.ostafon.supportportal.common.security;
 
-
-
 import com.ostafon.supportportal.users.model.UserEntity;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,13 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + Optional.ofNullable(user.getRole())));
+        // Spring Security автоматически добавляет ROLE_ префикс при проверке hasRole()
+        // Но для hasAuthority() используем без префикса
+        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
@@ -26,7 +25,7 @@ public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public @NonNull String getUsername() {
-        return Optional.ofNullable(user.getUsername()).orElse("");
+        return user.getUsername(); // теперь возвращает email
     }
 
     @Override
@@ -46,7 +45,7 @@ public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getIsActive() != null && user.getIsActive();
     }
 
     public String getRole() {
