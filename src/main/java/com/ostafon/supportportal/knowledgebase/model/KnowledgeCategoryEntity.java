@@ -5,8 +5,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "knowledge_categories")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class KnowledgeCategoryEntity {
 
@@ -16,4 +18,11 @@ public class KnowledgeCategoryEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(columnDefinition = "text")
+    private String description;
+
+    @Column(name = "display_order")
+    @Builder.Default
+    private Integer displayOrder = 999;
 }

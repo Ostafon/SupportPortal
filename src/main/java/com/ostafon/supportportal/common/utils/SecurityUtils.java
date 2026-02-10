@@ -79,6 +79,24 @@ public class SecurityUtils {
     }
 
     /**
+     * Check if current user has any of the specified roles
+     * @param roles roles to check
+     * @return true if user has any of the roles
+     */
+    public static boolean hasAnyRole(String... roles) {
+        String currentRole = getCurrentUserRole();
+        if (currentRole == null) {
+            return false;
+        }
+        for (String role : roles) {
+            if (currentRole.equalsIgnoreCase(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Check if current user is authenticated
      * @return true if user is authenticated
      */

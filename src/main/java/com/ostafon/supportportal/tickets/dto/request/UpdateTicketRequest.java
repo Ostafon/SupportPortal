@@ -3,6 +3,7 @@ package com.ostafon.supportportal.tickets.dto.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ostafon.supportportal.common.enums.TicketPriority;
 import com.ostafon.supportportal.common.enums.TicketStatus;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,9 +14,11 @@ import java.time.LocalDateTime;
 public class UpdateTicketRequest {
 
     @JsonProperty("title")
+    @Size(min = 3, max = 200, message = "Title must be between 3 and 200 characters")
     private String title;
 
     @JsonProperty("description")
+    @Size(min = 10, message = "Description must be at least 10 characters")
     private String description;
 
     @JsonProperty("priority")

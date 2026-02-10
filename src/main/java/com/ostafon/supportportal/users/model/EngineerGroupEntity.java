@@ -20,6 +20,9 @@ public class EngineerGroupEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @ManyToMany
     @JoinTable(
             name = "engineer_group_members",

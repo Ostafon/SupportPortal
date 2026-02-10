@@ -27,11 +27,26 @@ public class TicketResponse {
     @JsonProperty("status")
     private TicketStatus status;
 
+    @JsonProperty("requesterId")
+    private Long requesterId;
+
+    @JsonProperty("requesterName")
+    private String requesterName;
+
+    @JsonProperty("requesterEmail")
+    private String requesterEmail;
+
     @JsonProperty("assigneeId")
     private Long assigneeId;
 
+    @JsonProperty("assigneeName")
+    private String assigneeName;
+
     @JsonProperty("groupId")
     private Long groupId;
+
+    @JsonProperty("groupName")
+    private String groupName;
 
     @JsonProperty("createdAt")
     private LocalDateTime createdAt;
