@@ -105,6 +105,161 @@ SupportPortal/
     └── db/migration/      # Flyway миграции
 ```
 
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        A[React Frontend<br/>SPA Application]
+    end
+
+    subgraph "API Gateway"
+        B[Spring Boot Backend<br/>REST API<br/>Port: 8080]
+    end
+
+    subgraph "Security Layer"
+        C[Spring Security<br/>JWT Authentication<br/>BCrypt Password]
+    end
+
+    subgraph "Business Logic"
+        D[Auth Service]
+        E[Ticket Service]
+        F[User Service]
+        G[Chat Service]
+        H[Knowledge Base]
+        I[Notification Service]
+        J[Analytics Service]
+        K[Admin Service]
+    end
+
+    subgraph "Data Layer"
+        L[(PostgreSQL<br/>Database)]
+        M[Flyway<br/>Migrations]
+    end
+
+    subgraph "External Services"
+        N[SMTP Server<br/>Email Service]
+        O[Swagger UI<br/>API Docs]
+    end
+
+    A -->|HTTP/HTTPS<br/>JSON| B
+    B --> C
+    C --> D
+    C --> E
+    C --> F
+    C --> G
+    C --> H
+    C --> I
+    C --> J
+    C --> K
+
+    D --> L
+    E --> L
+    F --> L
+    G --> L
+    H --> L
+    I --> L
+    J --> L
+    K --> L
+
+    M -.->|Database<br/>Migrations| L
+    I -->|Send Email| N
+    B -.->|API Documentation| O
+
+    style A fill:#61dafb,stroke:#333,stroke-width:2px,color:#000
+    style B fill:#6db33f,stroke:#333,stroke-width:2px,color:#fff
+    style L fill:#336791,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#f39c12,stroke:#333,stroke-width:2px,color:#000
+```
+
+```mermaid
+flowchart LR
+    subgraph Frontend["🖥️ Frontend Layer"]
+        direction TB
+        UI[React UI Components]
+        Router[React Router]
+        State[State Management<br/>Redux/Context]
+        API[Axios/Fetch API]
+    end
+
+    subgraph Backend["⚙️ Backend Layer - Spring Boot 4.0.2"]
+        direction TB
+        Controller[REST Controllers]
+        Security[Spring Security 7.x<br/>JWT Filter]
+
+        subgraph Services["Business Services"]
+            AuthSvc[Auth Service]
+            TicketSvc[Ticket Service]
+            UserSvc[User Service]
+            ChatSvc[Chat Service]
+            KBSvc[Knowledge Base]
+            NotifSvc[Notification Service]
+            AnalyticsSvc[Analytics Service]
+            AdminSvc[Admin Service]
+        end
+
+        Repository[Spring Data JPA<br/>Repositories]
+    end
+
+    subgraph Data["💾 Data Layer"]
+        DB[(PostgreSQL 14+<br/>HikariCP Pool)]
+        Flyway[Flyway Migrations]
+    end
+
+    subgraph External["🌐 External Services"]
+        SMTP[SMTP Email<br/>Port 587]
+        Swagger[Swagger UI<br/>API Docs]
+    end
+
+    UI --> Router
+    Router --> State
+    State --> API
+    API -->|JSON/JWT| Controller
+
+    Controller --> Security
+    Security --> Services
+
+    Services --> Repository
+    Repository -->|Hibernate ORM| DB
+    Flyway -.->|Migrations| DB
+
+    NotifSvc -->|Send Email| SMTP
+    Controller -.->|Documentation| Swagger
+
+    style Frontend fill:#61dafb20,stroke:#61dafb,stroke-width:3px
+    style Backend fill:#6db33f20,stroke:#6db33f,stroke-width:3px
+    style Data fill:#33679120,stroke:#336791,stroke-width:3px
+    style External fill:#f39c1220,stroke:#f39c12,stroke-width:3px
+```
+
+```mermaid
+sequenceDiagram
+    participant U as 👤 User (React)
+    participant F as Frontend (React)
+    participant B as Backend (Spring Boot)
+    participant S as Spring Security + JWT
+    participant DB as PostgreSQL
+
+    U->>F: 1. Ввод login/password
+    F->>B: 2. POST /auth/login<br/>{email, password}
+    B->>S: 3. Аутентификация
+    S->>DB: 4. Проверка credentials
+    DB-->>S: 5. User data
+    S->>S: 6. Генерация JWT токена
+    S-->>B: 7. JWT token
+    B-->>F: 8. Response {token, user}
+    F->>F: 9. Сохранить token в localStorage
+    F-->>U: 10. Redirect to Dashboard
+
+    Note over F,B: Последующие запросы
+    U->>F: 11. Действие (например, GET /tickets)
+    F->>B: 12. GET /tickets<br/>Header: Authorization: Bearer {JWT}
+    B->>S: 13. Валидация JWT
+    S-->>B: 14. User authenticated
+    B->>DB: 15. Запрос данных
+    DB-->>B: 16. Tickets data
+    B-->>F: 17. Response {tickets[]}
+    F-->>U: 18. Отображение данных
+```
+
 ## 🔐 Безопасность
 
 - ✅ JWT токены с HMAC-SHA256
